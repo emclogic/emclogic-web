@@ -1,0 +1,85 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map(post => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title}>
+  <article>
+    <!-- Hero -->
+    <div class="bg-[#0a2540] text-white py-16">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {post.data.categories && post.data.categories.length > 0 && (
+          <div class="flex flex-wrap gap-2 mb-4">
+            {post.data.categories.map(cat => (
+              <span class="text-xs px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full font-medium border border-orange-500/30">
+                {cat}
+              </span>
+            ))}
+          </div>
+        )}
+        <h1 class="text-3xl sm:text-4xl font-bold leading-tight mb-4">{post.data.title}</h1>
+        <time class="text-white/50 text-sm" datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
+        </time>
+      </div>
+    </div>
+
+    {post.data.coverImage && (
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
+        <img
+          src={`/images/posts/${post.id}/${post.data.coverImage}`}
+          alt={post.data.title}
+          class="w-full rounded-xl shadow-lg object-cover max-h-80"
+        />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="prose prose-lg max-w-none
+        prose-headings:text-[#0a2540] prose-headings:font-bold
+        prose-p:text-gray-700 prose-p:leading-relaxed
+        prose-a:text-orange-500 prose-a:no-underline hover:prose-a:text-orange-600 hover:prose-a:underline
+        prose-strong:text-gray-800
+        prose-code:text-orange-700 prose-code:bg-orange-50 prose-code:px-1 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+        prose-pre:bg-[#0a2540] prose-pre:text-gray-100
+        prose-blockquote:border-orange-400 prose-blockquote:text-gray-600
+        prose-img:rounded-lg prose-img:shadow-md
+        prose-ul:text-gray-700 prose-ol:text-gray-700
+        prose-li:marker:text-orange-400">
+        <Content />
+      </div>
+
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="mt-10 pt-6 border-t border-gray-200">
+          <p class="text-sm text-gray-500 mb-2">Tags:</p>
+          <div class="flex flex-wrap gap-2">
+            {post.data.tags.map(tag => (
+              <span class="text-xs px-3 py-1 bg-gray-100 text-gray-600 rounded-full">{tag}</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="mt-10">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
+        >
+          ← Voltar para o Blog
+        </a>
+      </div>
+    </div>
+  </article>
+</Layout>

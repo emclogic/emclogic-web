@@ -1,17 +1,440 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
+const allPosts = await getCollection('posts');
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const clients = [
+  { name: 'HFN Sensors', logo: '/images/logo_hfn_sensors.webp' },
+  { name: 'Embarcados', logo: '/images/logo_embarcados.webp' },
+  { name: 'Kurokawa Controls', logo: '/images/logo_kurokawa_controls.webp' },
+  { name: 'Timpel', logo: '/images/timpel.png' },
+  { name: 'Dinamik Rental', logo: '/images/logo_dinamik_rental.webp' },
+  { name: 'Dínamo Energia', logo: '/images/logo_dinamo_energia.webp' },
+  { name: 'Diel', logo: '/images/logo_diel.webp' },
+  { name: 'Integrafácil', logo: '/images/logo_integrafacil.webp' },
+  { name: 'Agral', logo: '/images/logo_agral.webp' },
+  { name: 'Blockbit', logo: '/images/logo_blockbit.webp' },
+];
+
+const technologies = [
+  { name: 'Yocto', logo: '/images/logo_yocto.webp' },
+  { name: 'Linux', logo: '/images/logo_linux.webp' },
+  { name: 'Zephyr', logo: '/images/logo_zephyr.webp' },
+  { name: 'FreeRTOS', logo: '/images/logo_freertos.webp' },
+  { name: 'Qt', logo: '/images/logo_qt.webp' },
+  { name: 'Python', logo: '/images/Python-logo.png' },
+  { name: 'Node.js', logo: '/images/logo_nodejs.webp' },
+];
+
+const areas = [
+  'Automação Industrial',
+  'Tecnologias Agrícolas',
+  'Equipamentos Médicos e de Laboratório',
+  'Controle de Acesso e Segurança',
+  'Treinamentos',
+  'Internet das Coisas (IoT)',
+];
+
+const services = [
+  {
+    title: 'Desenvolvimento de Software para Linux Embarcado',
+    description: 'Para dispositivos que demandam interfaces ricas, alta conectividade, gateways e necessidade de integração com periféricos.',
+    items: [
+      'Personalização e otimização de imagens',
+      'Desenvolvimento de interfaces gráficas para displays',
+      'Otimização do tempo de Boot',
+      'Desenvolvimento de BSPs e drivers',
+      'Modificação e configuração de Device-Tree',
+      'Preparação do ambiente de programação e compilação cruzada',
+      'Inicialização de aplicações via Systemd e SysVinit',
+    ],
+  },
+  {
+    title: 'Desenvolvimento de Firmware para Microcontroladores',
+    description: 'Para dispositivos que demandam respostas em tempo real e baixo consumo.',
+    items: [
+      'Suporte para STM32, Nordic, NXP, ESP32',
+      'Desenvolvimento Baremetal ou RTOS',
+      'Redução de footprint e otimização de energia',
+      'Desenvolvimento de drivers e bibliotecas',
+      'Configuração de UART, I2C, PWM, GPIO, DMA, ADC, USB e CAN',
+      'Desenvolvimento com camadas de abstração (HAL)',
+      'Analisadores estáticos e testes unitários',
+    ],
+  },
+  {
+    title: 'Consultoria e Treinamentos sob Demanda',
+    description: 'Para assessorar e treinar sua equipe com estratégias alinhadas às necessidades do mercado.',
+    items: [
+      'Análise da melhor arquitetura de hardware',
+      'Escolha das melhores ferramentas e tecnologias',
+      'Estratégias para desenvolvimento rápido e seguro',
+      'Treinamentos online ou presencial',
+      'Customizados para as necessidades da equipe',
+      'Tópicos do básico ao avançado: Linux Embarcado e Yocto',
+      'Metodologia hands-on',
+    ],
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Viabilizando Tecnologias Embarcadas">
+
+  <!-- Hero -->
+  <section
+    class="relative min-h-[90vh] flex items-center bg-[#0a2540] text-white overflow-hidden"
+    style="background-image: url('/images/banner_hero.webp'); background-size: cover; background-position: center;"
+  >
+    <div class="absolute inset-0 bg-[#0a2540]/75"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          Viabilizando Tecnologias Embarcadas
+        </h1>
+        <p class="text-lg sm:text-xl text-white/80 mb-8 leading-relaxed">
+          Consultoria, Treinamento e Desenvolvimento em Software Embarcado para concretizar seus projetos.
+        </p>
+        <a
+          href="#servicos"
+          class="inline-block px-8 py-3 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 transition-colors text-base"
+        >
+          Conheça nossos serviços
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section class="py-14 bg-gray-50 border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-center text-sm font-semibold uppercase tracking-widest text-gray-500 mb-8">
+        Clientes e Parceiros que confiam em nossos serviços
+      </h2>
+      <div class="flex flex-wrap justify-center items-center gap-8">
+        {clients.map(client => (
+          <img
+            src={client.logo}
+            alt={`Logo ${client.name}`}
+            class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="sobre" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-[#0a2540] mb-6">Sobre a Emc Logic</h2>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            Atuando há 7 anos no mercado, fornecemos serviços de consultoria, treinamento e desenvolvimento de software para Sistemas Embarcados microcontrolados e microprocessados.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-8">
+            Viabilizamos um rápido time-to-market para dispositivos embarcados incorporando as melhores práticas de desenvolvimento e migrando projetos para as mais recentes soluções open source. Estamos sempre dispostos a assessorar nossos clientes para que encontrem soluções rápidas, otimizadas, seguras e com um bom custo-benefício.
+          </p>
+          <a
+            href="#contato"
+            class="inline-block px-6 py-3 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 transition-colors"
+          >
+            Fale conosco
+          </a>
+        </div>
+        <div class="flex justify-center lg:justify-end">
+          <img
+            src="/images/img_sobre_codando.webp"
+            alt="Programador trabalhando com código"
+            class="rounded-lg shadow-lg w-full max-w-lg object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="servicos" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold text-[#0a2540] mb-4">Nossos serviços</h2>
+        <div class="flex justify-center">
+          <img src="/images/img_servicos.webp" alt="Placa de desenvolvimento embarcado" class="rounded-lg shadow w-full max-w-3xl object-cover h-48 mt-4" />
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        {services.map(service => (
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col gap-4 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-bold text-[#0a2540] leading-snug">{service.title}</h3>
+            <p class="text-sm text-gray-500">{service.description}</p>
+            <ul class="flex flex-col gap-1 mt-auto">
+              {service.items.map(item => (
+                <li class="flex items-start gap-2 text-sm text-gray-600">
+                  <span class="mt-1 w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Technologies -->
+  <section id="tecnologias" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-bold text-[#0a2540] text-center mb-12">Principais Tecnologias</h2>
+      <div class="flex flex-wrap justify-center items-center gap-10">
+        {technologies.map(tech => (
+          <div class="flex flex-col items-center gap-2 group">
+            <img
+              src={tech.logo}
+              alt={`Logo ${tech.name}`}
+              class="h-14 w-auto object-contain grayscale group-hover:grayscale-0 transition-all"
+            />
+            <span class="text-xs text-gray-400 group-hover:text-gray-600 transition-colors">{tech.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Areas -->
+  <section id="areas" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-[#0a2540] mb-8">Áreas de atuação</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {areas.map(area => (
+              <div class="flex items-center gap-3 bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <span class="w-2 h-2 rounded-full bg-orange-500 shrink-0"></span>
+                <span class="text-sm font-medium text-gray-700">{area}</span>
+              </div>
+            ))}
+          </div>
+          <div class="mt-8">
+            <a
+              href="#contato"
+              class="inline-block px-6 py-3 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 transition-colors"
+            >
+              Fale conosco
+            </a>
+          </div>
+        </div>
+        <div class="flex justify-center lg:justify-end">
+          <img
+            src="/images/img_areas_de_atuacao.webp"
+            alt="Placa de desenvolvimento embarcado"
+            class="rounded-lg shadow-lg w-full max-w-lg object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-10">
+        <h2 class="text-3xl sm:text-4xl font-bold text-[#0a2540]">Confira nossos insights</h2>
+        <a href="/blog" class="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors">
+          Ver todos →
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {recentPosts.map(post => (
+          <article class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
+            {post.data.coverImage && (
+              <a href={`/blog/${post.id}`} class="block overflow-hidden">
+                <img
+                  src={`/images/posts/${post.id}/${post.data.coverImage}`}
+                  alt={post.data.title}
+                  class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </a>
+            )}
+            <div class="p-5">
+              <time class="text-xs text-gray-400 mb-2 block" datetime={post.data.date.toISOString()}>
+                {post.data.date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </time>
+              <h3 class="font-bold text-[#0a2540] leading-snug mb-3">
+                <a href={`/blog/${post.id}`} class="hover:text-orange-500 transition-colors">
+                  {post.data.title}
+                </a>
+              </h3>
+              <a
+                href={`/blog/${post.id}`}
+                class="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
+              >
+                Leia mais →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contato" class="py-20 bg-[#0a2540] text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-10">Fale conosco</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <address class="not-italic flex flex-col gap-4">
+          <div>
+            <p class="font-semibold text-white">Emc Logic Tecnologia LTDA</p>
+            <p class="text-white/70 text-sm mt-1">Caixa Postal 25 — Itápolis/SP<br />CEP: 14.900-970</p>
+          </div>
+          <div class="flex flex-col gap-2 text-sm">
+            <p>
+              <span class="text-white/50">Telefone: </span>
+              <a href="tel:+5516936181941" class="text-white hover:text-orange-400 transition-colors">+55 (16) 9 3618-1941</a>
+            </p>
+            <p>
+              <span class="text-white/50">WhatsApp: </span>
+              <a href="https://wa.me/5516936181941" target="_blank" rel="noopener" class="text-white hover:text-orange-400 transition-colors">+55 (16) 9 3618-1941</a>
+            </p>
+            <p>
+              <span class="text-white/50">E-mail: </span>
+              <a href="mailto:contato@emc-logic.com" class="text-white hover:text-orange-400 transition-colors">contato@emc-logic.com</a>
+            </p>
+          </div>
+          <div class="flex items-center gap-4 mt-4">
+            <a href="https://www.linkedin.com/company/emc-logic" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-white/60 hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://github.com/emclogic" target="_blank" rel="noopener" aria-label="GitHub" class="text-white/60 hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@emc-logic" target="_blank" rel="noopener" aria-label="YouTube" class="text-white/60 hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://wa.me/5516936181941" target="_blank" rel="noopener" aria-label="WhatsApp" class="text-white/60 hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            </a>
+          </div>
+        </address>
+
+        <!-- Formspree contact form — substitua YOUR_FORM_ID pelo ID real -->
+        <form
+          id="contact-form"
+          class="flex flex-col gap-4"
+          novalidate
+        >
+          <!-- honeypot anti-spam -->
+          <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1">
+              <label for="name" class="text-sm font-medium text-white/80">Nome <span class="text-orange-400">*</span></label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="Seu nome"
+                class="bg-white/10 border border-white/20 rounded px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 transition-colors"
+              />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="email" class="text-sm font-medium text-white/80">E-mail <span class="text-orange-400">*</span></label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="seu@email.com"
+                class="bg-white/10 border border-white/20 rounded px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 transition-colors"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="company" class="text-sm font-medium text-white/80">Empresa</label>
+            <input
+              id="company"
+              name="company"
+              type="text"
+              placeholder="Nome da empresa (opcional)"
+              class="bg-white/10 border border-white/20 rounded px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 transition-colors"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="message" class="text-sm font-medium text-white/80">Mensagem <span class="text-orange-400">*</span></label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="5"
+              placeholder="Descreva seu projeto ou dúvida..."
+              class="bg-white/10 border border-white/20 rounded px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 transition-colors resize-none"
+            ></textarea>
+          </div>
+
+          <div id="form-status" class="hidden text-sm rounded px-4 py-3"></div>
+
+          <button
+            type="submit"
+            id="form-submit"
+            class="w-full sm:w-auto px-8 py-3 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Enviar mensagem
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<script>
+  // Substitua YOUR_FORM_ID pelo ID do seu formulário Formspree
+  const FORMSPREE_ID = 'mredrkad';
+
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+  const submitBtn = document.getElementById('form-submit') as HTMLButtonElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form || !status || !submitBtn) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
+    status.className = 'hidden text-sm rounded px-4 py-3';
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        status.textContent = '✓ Mensagem enviada! Retornaremos em breve.';
+        status.className = 'text-sm rounded px-4 py-3 bg-green-500/20 text-green-300 border border-green-500/30';
+        form.reset();
+      } else {
+        const json = await res.json().catch(() => ({}));
+        const msg = (json as { error?: string }).error ?? 'Erro ao enviar. Tente novamente.';
+        throw new Error(msg);
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Erro ao enviar. Tente novamente.';
+      status.textContent = `✗ ${message}`;
+      status.className = 'text-sm rounded px-4 py-3 bg-red-500/20 text-red-300 border border-red-500/30';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar mensagem';
+      status.classList.remove('hidden');
+    }
+  });
+</script>

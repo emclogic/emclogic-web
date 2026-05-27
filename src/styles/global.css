@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-primary: #0a2540;
+  --color-primary-light: #1a3a5c;
+  --color-accent: #f97316;
+  --color-accent-dark: #ea6c0a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-gray-800;
+  }
+}
