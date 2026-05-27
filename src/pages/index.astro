@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { url } from '../lib/url';
 
 const allPosts = await getCollection('posts');
 const recentPosts = allPosts
@@ -8,26 +9,26 @@ const recentPosts = allPosts
   .slice(0, 3);
 
 const clients = [
-  { name: 'HFN Sensors', logo: '/images/logo_hfn_sensors.webp' },
-  { name: 'Embarcados', logo: '/images/logo_embarcados.webp' },
-  { name: 'Kurokawa Controls', logo: '/images/logo_kurokawa_controls.webp' },
-  { name: 'Timpel', logo: '/images/timpel.png' },
-  { name: 'Dinamik Rental', logo: '/images/logo_dinamik_rental.webp' },
-  { name: 'Dínamo Energia', logo: '/images/logo_dinamo_energia.webp' },
-  { name: 'Diel', logo: '/images/logo_diel.webp' },
-  { name: 'Integrafácil', logo: '/images/logo_integrafacil.webp' },
-  { name: 'Agral', logo: '/images/logo_agral.webp' },
-  { name: 'Blockbit', logo: '/images/logo_blockbit.webp' },
+  { name: 'HFN Sensors', logo: url('/images/logo_hfn_sensors.webp') },
+  { name: 'Embarcados', logo: url('/images/logo_embarcados.webp') },
+  { name: 'Kurokawa Controls', logo: url('/images/logo_kurokawa_controls.webp') },
+  { name: 'Timpel', logo: url('/images/timpel.png') },
+  { name: 'Dinamik Rental', logo: url('/images/logo_dinamik_rental.webp') },
+  { name: 'Dínamo Energia', logo: url('/images/logo_dinamo_energia.webp') },
+  { name: 'Diel', logo: url('/images/logo_diel.webp') },
+  { name: 'Integrafácil', logo: url('/images/logo_integrafacil.webp') },
+  { name: 'Agral', logo: url('/images/logo_agral.webp') },
+  { name: 'Blockbit', logo: url('/images/logo_blockbit.webp') },
 ];
 
 const technologies = [
-  { name: 'Yocto', logo: '/images/logo_yocto.webp' },
-  { name: 'Linux', logo: '/images/logo_linux.webp' },
-  { name: 'Zephyr', logo: '/images/logo_zephyr.webp' },
-  { name: 'FreeRTOS', logo: '/images/logo_freertos.webp' },
-  { name: 'Qt', logo: '/images/logo_qt.webp' },
-  { name: 'Python', logo: '/images/Python-logo.png' },
-  { name: 'Node.js', logo: '/images/logo_nodejs.webp' },
+  { name: 'Yocto', logo: url('/images/logo_yocto.webp') },
+  { name: 'Linux', logo: url('/images/logo_linux.webp') },
+  { name: 'Zephyr', logo: url('/images/logo_zephyr.webp') },
+  { name: 'FreeRTOS', logo: url('/images/logo_freertos.webp') },
+  { name: 'Qt', logo: url('/images/logo_qt.webp') },
+  { name: 'Python', logo: url('/images/Python-logo.png') },
+  { name: 'Node.js', logo: url('/images/logo_nodejs.webp') },
 ];
 
 const areas = [
@@ -87,7 +88,7 @@ const services = [
   <!-- Hero -->
   <section
     class="relative min-h-[90vh] flex items-center bg-[#0a2540] text-white overflow-hidden"
-    style="background-image: url('/images/banner_hero.webp'); background-size: cover; background-position: center;"
+    style={`background-image: url('${url('/images/banner_hero.webp')}'); background-size: cover; background-position: center;`}
   >
     <div class="absolute inset-0 bg-[#0a2540]/75"></div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
@@ -147,7 +148,7 @@ const services = [
         </div>
         <div class="flex justify-center lg:justify-end">
           <img
-            src="/images/img_sobre_codando.webp"
+            src={url('/images/img_sobre_codando.webp')}
             alt="Programador trabalhando com código"
             class="rounded-lg shadow-lg w-full max-w-lg object-cover"
           />
@@ -162,7 +163,7 @@ const services = [
       <div class="text-center mb-12">
         <h2 class="text-3xl sm:text-4xl font-bold text-[#0a2540] mb-4">Nossos serviços</h2>
         <div class="flex justify-center">
-          <img src="/images/img_servicos.webp" alt="Placa de desenvolvimento embarcado" class="rounded-lg shadow w-full max-w-3xl object-cover h-48 mt-4" />
+          <img src={url('/images/img_servicos.webp')} alt="Placa de desenvolvimento embarcado" class="rounded-lg shadow w-full max-w-3xl object-cover h-48 mt-4" />
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
@@ -228,7 +229,7 @@ const services = [
         </div>
         <div class="flex justify-center lg:justify-end">
           <img
-            src="/images/img_areas_de_atuacao.webp"
+            src={url('/images/img_areas_de_atuacao.webp')}
             alt="Placa de desenvolvimento embarcado"
             class="rounded-lg shadow-lg w-full max-w-lg object-cover"
           />
@@ -242,7 +243,7 @@ const services = [
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between mb-10">
         <h2 class="text-3xl sm:text-4xl font-bold text-[#0a2540]">Confira nossos insights</h2>
-        <a href="/blog" class="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors">
+        <a href={url('/blog')} class="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors">
           Ver todos →
         </a>
       </div>
@@ -250,9 +251,9 @@ const services = [
         {recentPosts.map(post => (
           <article class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
             {post.data.coverImage && (
-              <a href={`/blog/${post.id}`} class="block overflow-hidden">
+              <a href={url(`/blog/${post.id}`)} class="block overflow-hidden">
                 <img
-                  src={`/images/posts/${post.id}/${post.data.coverImage}`}
+                  src={url(`/images/posts/${post.id}/${post.data.coverImage}`)}
                   alt={post.data.title}
                   class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -263,12 +264,12 @@ const services = [
                 {post.data.date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
               </time>
               <h3 class="font-bold text-[#0a2540] leading-snug mb-3">
-                <a href={`/blog/${post.id}`} class="hover:text-orange-500 transition-colors">
+                <a href={url(`/blog/${post.id}`)} class="hover:text-orange-500 transition-colors">
                   {post.data.title}
                 </a>
               </h3>
               <a
-                href={`/blog/${post.id}`}
+                href={url(`/blog/${post.id}`)}
                 class="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
               >
                 Leia mais →

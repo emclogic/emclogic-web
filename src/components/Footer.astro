@@ -1,11 +1,13 @@
 ---
+import { url } from '../lib/url';
+
 const navLinks = [
-  { label: 'Sobre', href: '/#sobre' },
-  { label: 'Serviços', href: '/#servicos' },
-  { label: 'Tecnologias', href: '/#tecnologias' },
-  { label: 'Áreas', href: '/#areas' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contato', href: '/#contato' },
+  { label: 'Sobre', href: url('/#sobre') },
+  { label: 'Serviços', href: url('/#servicos') },
+  { label: 'Tecnologias', href: url('/#tecnologias') },
+  { label: 'Áreas', href: url('/#areas') },
+  { label: 'Blog', href: url('/blog') },
+  { label: 'Contato', href: url('/#contato') },
 ];
 ---
 
@@ -15,8 +17,8 @@ const navLinks = [
 
       <!-- Brand -->
       <div class="flex flex-col gap-4">
-        <a href="/">
-          <img src="/images/logo_emc_logic_branco.svg" alt="Emc Logic" class="h-10 w-auto" />
+        <a href={url('/')}>
+          <img src={url('/images/logo_emc_logic_branco.svg')} alt="Emc Logic" class="h-10 w-auto" />
         </a>
         <p class="text-sm text-white/70 leading-relaxed">Viabilizando Tecnologias Embarcadas</p>
         <div class="flex items-center gap-4 mt-2">
@@ -42,7 +44,7 @@ const navLinks = [
           </a>
         </div>
         <a href="https://hubusp.inovacao.usp.br/empresas" target="_blank" rel="noopener" class="mt-2 w-fit">
-          <img src="/images/Ativo-1@0.5x.webp" alt="DNA USP" class="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity" />
+          <img src={url('/images/Ativo-1@0.5x.webp')} alt="DNA USP" class="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity" />
         </a>
       </div>
 

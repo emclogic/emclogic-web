@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { url } from '../../lib/url';
 
 const posts = await getCollection('posts');
 const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -20,9 +21,9 @@ const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.get
         {sortedPosts.map(post => (
           <article class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
             {post.data.coverImage && (
-              <a href={`/blog/${post.id}`} class="block overflow-hidden">
+              <a href={url(`/blog/${post.id}`)} class="block overflow-hidden">
                 <img
-                  src={`/images/posts/${post.id}/${post.data.coverImage}`}
+                  src={url(`/images/posts/${post.id}/${post.data.coverImage}`)}
                   alt={post.data.title}
                   class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -45,12 +46,12 @@ const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.get
                 {post.data.date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
               </time>
               <h2 class="font-bold text-[#0a2540] leading-snug mb-3">
-                <a href={`/blog/${post.id}`} class="hover:text-orange-500 transition-colors">
+                <a href={url(`/blog/${post.id}`)} class="hover:text-orange-500 transition-colors">
                   {post.data.title}
                 </a>
               </h2>
               <a
-                href={`/blog/${post.id}`}
+                href={url(`/blog/${post.id}`)}
                 class="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
               >
                 Leia mais →
