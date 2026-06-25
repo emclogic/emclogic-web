@@ -49,6 +49,15 @@ const ogImageURL = new URL(url(image), Astro.site || Astro.url.origin);
 
 <html lang={lang === 'en' ? 'en-US' : 'pt-BR'}>
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-BLC7Z590LH"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-BLC7Z590LH');
+    </script>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
