@@ -4,8 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import { remarkPostImages } from './src/plugins/remarkPostImages.mjs';
 
 export default defineConfig({
-  site: 'https://emclogic.github.io/emclogic-web',
-  base: '/emclogic-web',
+  site: 'https://emc-logic.com',
   markdown: {
     remarkPlugins: [remarkPostImages],
   },
