@@ -8,6 +8,8 @@ import { getLangFromUrl } from '../i18n/utils';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  type?: string;
 }
 
 const lang = getLangFromUrl(Astro.url);
@@ -15,17 +17,69 @@ const defaultDesc = lang === 'en'
   ? 'Consulting, Training, and Embedded Software Development'
   : 'Consultoria, Treinamento e Desenvolvimento em Software Embarcado';
 
-const { title, description = defaultDesc } = Astro.props;
+const { 
+  title, 
+  description = defaultDesc,
+  image = '/images/banner_hero.webp',
+  type = 'website'
+} = Astro.props;
+
+// Canonical URL
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
+
+// Alternate URLs for hreflang
+const basePath = url('');
+const currentPath = Astro.url.pathname;
+const relativePath = currentPath.startsWith(basePath) 
+  ? currentPath.slice(basePath.length) 
+  : currentPath;
+const cleanPath = relativePath.startsWith('/en') 
+  ? relativePath.slice(3) 
+  : relativePath;
+
+// Safe URL construction helper
+const safeUrl = (path: string) => new URL(url(path), Astro.site || Astro.url.origin).toString().replace(/(https?:\/\/.*?)\/\//g, '$1/');
+
+const ptUrl = safeUrl(cleanPath || '/');
+const enUrl = safeUrl(cleanPath === '/' ? '/en' : `/en${cleanPath}`);
+
+// Absolute Image URL for OpenGraph
+const ogImageURL = new URL(url(image), Astro.site || Astro.url.origin);
 ---
 
-<html lang={lang === 'en' ? 'en' : 'pt-BR'}>
+<html lang={lang === 'en' ? 'en-US' : 'pt-BR'}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
+    
+    <!-- Primary Meta Tags -->
     <title>{title} | Emc Logic</title>
+    <meta name="title" content={`${title} | Emc Logic`} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Alternate Language Links -->
+    <link rel="alternate" hreflang="pt-BR" href={ptUrl} />
+    <link rel="alternate" hreflang="en-US" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={ptUrl} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | Emc Logic`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="Emc Logic" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'pt_BR'} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={`${title} | Emc Logic`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImageURL} />
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />

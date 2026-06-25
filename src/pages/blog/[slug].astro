@@ -15,7 +15,11 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Layout title={post.data.title}>
+<Layout 
+  title={post.data.title} 
+  image={post.data.coverImage ? `/images/posts/${post.id}/${post.data.coverImage}` : undefined}
+  type="article"
+>
   <article>
     <!-- Hero -->
     <div class="bg-[#0a2540] text-white py-16">
