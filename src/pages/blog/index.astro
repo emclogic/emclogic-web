@@ -19,40 +19,40 @@ const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.get
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {sortedPosts.map(post => (
-          <article class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
+          <article class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group flex flex-col h-full">
             {post.data.coverImage && (
               <a href={url(`/blog/${post.id}`)} class="block overflow-hidden">
                 <img
                   src={url(`/images/posts/${post.id}/${post.data.coverImage}`)}
                   alt={post.data.title}
-                  class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
+                  class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </a>
             )}
             {!post.data.coverImage && (
-              <div class="w-full h-44 bg-gradient-to-br from-[#0a2540] to-[#1a3a5c] flex items-center justify-center">
+              <div class="w-full h-56 bg-gradient-to-br from-[#0a2540] to-[#1a3a5c] flex items-center justify-center">
                 <span class="text-white/20 text-5xl font-bold">{post.data.title.charAt(0)}</span>
               </div>
             )}
-            <div class="p-5">
+            <div class="p-6 md:p-8 flex-1 flex flex-col">
               {post.data.categories && post.data.categories.length > 0 && (
-                <div class="flex flex-wrap gap-1 mb-2">
+                <div class="flex flex-wrap gap-2 mb-4">
                   {post.data.categories.map(cat => (
-                    <span class="text-xs px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full font-medium">{cat}</span>
+                    <span class="text-xs px-3 py-1 bg-orange-50 text-orange-600 rounded-full font-semibold border border-orange-100">{cat}</span>
                   ))}
                 </div>
               )}
-              <time class="text-xs text-gray-400 mb-2 block" datetime={post.data.date.toISOString()}>
+              <time class="text-sm font-medium text-gray-400 mb-3 block uppercase tracking-wider" datetime={post.data.date.toISOString()}>
                 {post.data.date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
               </time>
-              <h2 class="font-bold text-[#0a2540] leading-snug mb-3">
+              <h2 class="text-xl font-bold text-[#0a2540] leading-snug mb-5">
                 <a href={url(`/blog/${post.id}`)} class="hover:text-orange-500 transition-colors">
                   {post.data.title}
                 </a>
               </h2>
               <a
                 href={url(`/blog/${post.id}`)}
-                class="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors"
+                class="mt-auto inline-flex items-center gap-2 text-sm font-bold text-orange-500 hover:text-orange-600 transition-colors"
               >
                 Leia mais →
               </a>
